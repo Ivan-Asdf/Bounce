@@ -1,0 +1,16 @@
+
+**** Linux(debian 10) ****
+
+If using Vscode:
+    install clang-format extension
+        Add `"editor.formatOnSave": true` to settings.json
+    apt install clang-format
+This will making when saving the file to automatically format it correctly. Format used is LLVM + some modifications of it inside .clang-format
+
+sudo apt install:
+    build-esentials (gcc compiler, make)
+    libsdl2-dev (SDL2 library)
+    libsdl2-gfx-dev (SDL2_gfx library)
+
+Building:
+    just run "make" in the base directory of project
