@@ -1,11 +1,13 @@
 #include <stdio.h>
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL2_framerate.h>
+#undef main //https://stackoverflow.com/questions/6847360/error-lnk2019-unresolved-external-symbol-main-referenced-in-function-tmainc
 
 #include "level_editor.h"
 
-#define FPS 200
+#define FPS 60
+
+void capFramerate(Uint32 startTick);
 
 int main() {
     int rc = SDL_Init(SDL_INIT_VIDEO);
@@ -26,12 +28,12 @@ int main() {
     camera.setTerrain(&terrain);
 
     SDL_Event event;
-    FPSmanager m;
-    SDL_initFramerate(&m);
-    SDL_setFramerate(&m, 60);
     bool quit = false;
     bool recentMove = false;
+    Uint32 startFrameTime;
     while (!quit) {
+        startFrameTime = SDL_GetTicks();
+
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 quit = true;
@@ -76,9 +78,17 @@ int main() {
         SDL_RenderClear(renderer);
         camera.render(renderer);
         SDL_RenderPresent(renderer);
-        SDL_framerateDelay(&m);
-        // printf("FPS: %d\n", SDL_getFramerate(&m));
+
+        // Limit framerate
+        capFramerate(startFrameTime);
     }
 
     SDL_Quit();
+    return 0;
+}
+
+void capFramerate(Uint32 startTick)
+{
+    if ((1000 / FPS) > SDL_GetTicks() - startTick)
+        SDL_Delay( 1000 / FPS - (SDL_GetTicks() - startTick));
 }
