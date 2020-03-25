@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include <SDL2/SDL.h>
-#undef main //https://stackoverflow.com/questions/6847360/error-lnk2019-unresolved-external-symbol-main-referenced-in-function-tmainc
+#undef main // https://stackoverflow.com/questions/6847360/error-lnk2019-unresolved-external-symbol-main-referenced-in-function-tmainc
 
 #include "level_editor.h"
 
@@ -21,11 +21,8 @@ int main() {
     if (rc)
         printf("Failed to create window\n");
 
-    Terrain terrain;
     LevelEditor levelEditor;
-    Camera camera;
-    levelEditor.setTerrain(&terrain);
-    camera.setTerrain(&terrain);
+    levelEditor.setRenderer(renderer);
 
     SDL_Event event;
     bool quit = false;
@@ -47,24 +44,22 @@ int main() {
                 switch (event.key.keysym.sym) {
                 case SDLK_UP:
                     if (!recentMove)
-                        camera.move(0, -1);
+                        levelEditor.moveCamera(0, -1);
                     recentMove = true;
                     break;
                 case SDLK_DOWN:
                     if (!recentMove)
-                        camera.move(0, 1);
+                        levelEditor.moveCamera(0, 1);
                     recentMove = true;
                     break;
                 case SDLK_LEFT:
                     if (!recentMove)
-                        camera.move(-1, 0);
+                        levelEditor.moveCamera(-1, 0);
                     recentMove = true;
                     break;
                 case SDLK_RIGHT:
-                    if (!recentMove) {
-                        camera.move(1, 0);
-                        printf("Move Right\n");
-                    }
+                    if (!recentMove)
+                        levelEditor.moveCamera(1, 0);
                     recentMove = true;
                     break;
                 }
@@ -74,10 +69,7 @@ int main() {
             }
         }
 
-        SDL_SetRenderDrawColor(renderer, 135, 206, 235, 255);
-        SDL_RenderClear(renderer);
-        camera.render(renderer);
-        SDL_RenderPresent(renderer);
+        levelEditor.render();
 
         // Limit framerate
         capFramerate(startFrameTime);
@@ -87,8 +79,7 @@ int main() {
     return 0;
 }
 
-void capFramerate(Uint32 startTick)
-{
+void capFramerate(Uint32 startTick) {
     if ((1000 / FPS) > SDL_GetTicks() - startTick)
-        SDL_Delay( 1000 / FPS - (SDL_GetTicks() - startTick));
+        SDL_Delay(1000 / FPS - (SDL_GetTicks() - startTick));
 }
