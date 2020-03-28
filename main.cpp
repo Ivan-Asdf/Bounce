@@ -25,8 +25,7 @@ int main() {
     loadTexture(renderer, TEXTURE_BRICK, "brick.png");
     loadTexture(renderer, TEXTURE_BALL, "ball.png");
     loadTexture(renderer, TEXTURE_GRID, "grid.png");
-    LevelEditor levelEditor;
-    levelEditor.setRenderer(renderer);
+    LevelEditor levelEditor(renderer);
 
     SDL_Event event;
     bool quit = false;

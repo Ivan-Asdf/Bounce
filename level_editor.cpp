@@ -1,4 +1,6 @@
 
+#include <string>
+
 #include "SDL2/SDL_ttf.h"
 
 #include "level_editor.h"
@@ -55,6 +57,8 @@ void Camera::resize(unsigned w, unsigned h) {
     mRect.h = h;
 }
 
+LevelEditor::LevelEditor(SDL_Renderer* renderer) : mRenderer(renderer) {}
+
 void LevelEditor::onClick(int x, int y, int button) {
     if (button == SDL_BUTTON_LEFT) {
         mCamera.viewToAbsolute(x, y);
@@ -92,7 +96,6 @@ void LevelEditor::render() {
     SDL_RenderPresent(mRenderer);
 }
 
-void LevelEditor::setRenderer(SDL_Renderer* r) { mRenderer = r; }
 void LevelEditor::moveCamera(int x, int y) { mCamera.move(x, y); }
 void LevelEditor::resizeCamera(unsigned w, unsigned h) { mCamera.resize(w, h); }
 

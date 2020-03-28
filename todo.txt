@@ -1,3 +1,11 @@
+
+Bugfix/Refactoring/Porting:
+    Replacing duplicated path in CMakeLists.txt with variables
+    Add support in CMakeLists for release build(the copying of files next built executable only happens in Debug build currently)
+    Make Cmake the buildsystem when building on Linux(now its make), remove Makefile
+
+
+Features:
 Wheater or not what mouse buttons do will depend of specific "mode". 
 Modes examples: eraser, brick insertion, ball insertion, spike, insertion
 Modes will be changed with keyboard shortcuts.

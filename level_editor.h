@@ -29,10 +29,10 @@ enum EditMode {
 
 class LevelEditor {
 public:
+    LevelEditor(SDL_Renderer* renderer);
     void onClick(int x, int y, int button);
 
     void render();
-    void setRenderer(SDL_Renderer* r);
     void moveCamera(int x, int y);
     void resizeCamera(unsigned w, unsigned h);
     void onKeyDown(SDL_Keycode sym);
@@ -41,7 +41,7 @@ private:
     void renderModeLabel();
 
 private:
-    EditMode mode;
+    EditMode mode = TILE;
     Terrain mTerrain;
     Camera mCamera;
     SDL_Renderer* mRenderer;
