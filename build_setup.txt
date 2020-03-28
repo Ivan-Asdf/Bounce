@@ -11,7 +11,9 @@ This will making when saving the file to automatically format it correctly. Form
 sudo apt install:
     build-esentials (gcc compiler, make)
     libsdl2-dev (SDL2 library)
-    libsdl2-gfx-dev (SDL2_gfx library)
+    libsdl2-image-dev
+    libsdl2-tff-dev (SDL2_ttf)
+    //libsdl2-gfx-dev (SDL2_gfx library)
 
 Building:
     just run "make" in the base directory of project

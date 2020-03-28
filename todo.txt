@@ -1,0 +1,9 @@
+Wheater or not what mouse buttons do will depend of specific "mode". 
+Modes examples: eraser, brick insertion, ball insertion, spike, insertion
+Modes will be changed with keyboard shortcuts.
+    Add custom cursor and/or ui indicator for current mode.
+    Add erase logic
+        Add testCollision method between point and rect
+
+Create level save format.
+Start developing game inself.
