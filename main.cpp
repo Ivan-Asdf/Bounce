@@ -4,6 +4,7 @@
 #undef main // https://stackoverflow.com/questions/6847360/error-lnk2019-unresolved-external-symbol-main-referenced-in-function-tmainc
 #include <SDL2/SDL_ttf.h>
 
+#include "globals.h"
 #include "level_editor.h"
 
 #define FPS 60
@@ -22,10 +23,10 @@ int main() {
     SDL_Renderer* renderer =
         SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    loadTexture(renderer, TEXTURE_BRICK, "brick.png");
-    loadTexture(renderer, TEXTURE_BALL, "ball.png");
-    loadTexture(renderer, TEXTURE_GRID, "grid.png");
     LevelEditor levelEditor(renderer);
+    levelEditor.loadLevelFile("level.yaml");
+
+    TextureLoader::init(renderer);
 
     SDL_Event event;
     bool quit = false;
@@ -37,6 +38,7 @@ int main() {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 quit = true;
+                levelEditor.saveLevelFile("level_save.yaml");
                 break;
             } else if (event.type == SDL_WINDOWEVENT) {
                 if (event.window.event == SDL_WINDOWEVENT_RESIZED) {

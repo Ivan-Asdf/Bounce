@@ -4,8 +4,7 @@
 #include <SDL2/SDL.h>
 
 #include "game_object.h"
-
-#define TILE_SIZE 64
+#include "terrain.h"
 
 class Camera {
 public:
@@ -30,12 +29,15 @@ enum EditMode {
 class LevelEditor {
 public:
     LevelEditor(SDL_Renderer* renderer);
-    void onClick(int x, int y, int button);
 
+    void onClick(int x, int y, int button);
     void render();
     void moveCamera(int x, int y);
     void resizeCamera(unsigned w, unsigned h);
     void onKeyDown(SDL_Keycode sym);
+
+    void loadLevelFile(const char* path);
+    void saveLevelFile(const char* path);
 
 private:
     void renderModeLabel();

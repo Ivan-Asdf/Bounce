@@ -3,6 +3,9 @@
 
 #include "SDL2/SDL_ttf.h"
 
+#include "globals.h"
+#include "texture_loader.h"
+
 #include "level_editor.h"
 
 Camera::Camera() : mRect(0, 0, 13 * TILE_SIZE, 8 * TILE_SIZE) {}
@@ -17,12 +20,12 @@ void Camera::render(SDL_Renderer* renderer, const Terrain& terrain) {
             sdlRect.w = TILE_SIZE;
             sdlRect.h = TILE_SIZE;
             SDL_Rect srcrect{0, 0, 64, 64};
-            SDL_RenderCopy(renderer, gTextures[TEXTURE_GRID], &srcrect,
-                           &sdlRect);
+            SDL_RenderCopy(renderer, TextureLoader::getTexture(TEXTURE_GRID),
+                           &srcrect, &sdlRect);
         }
     }
     // SDL_SetRenderDrawColor(renderer, 200, 0, 0, 255);
-    for (const GameObject* object : terrain.objects) {
+    for (const GameObject* object : terrain.mObjects) {
         Rect rect = object->getRect();
         if (isColliding(rect, mRect)) {
             SDL_Rect sdlRect;
@@ -82,7 +85,7 @@ void LevelEditor::onClick(int x, int y, int button) {
             }
             mTerrain.addObject(object);
         } else {
-            // Erase logic
+            mTerrain.removeObjectAt(x, y);
         }
     }
 }
@@ -162,3 +165,6 @@ void LevelEditor::renderModeLabel() {
     SDL_FreeSurface(labelSurface);
     SDL_DestroyTexture(labelTexture);
 }
+
+void LevelEditor::loadLevelFile(const char* path) { mTerrain.load(path); }
+void LevelEditor::saveLevelFile(const char* path) { mTerrain.saveAs(path); }

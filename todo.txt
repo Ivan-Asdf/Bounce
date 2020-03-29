@@ -1,17 +1,15 @@
 
 Bugfix/Refactoring/Porting:
-    Replacing duplicated path in CMakeLists.txt with variables
-    Add support in CMakeLists for release build(the copying of files next built executable only happens in Debug build currently)
-    Make Cmake the buildsystem when building on Linux(now its make), remove Makefile
+- Add libyaml-cpp library for Windows(make it build)
+- Replacing duplicated path in CMakeLists.txt with variables
+- Add support in CMakeLists for release build(the copying of files next built executable only happens in Debug build currently)
+- Make Cmake the buildsystem when building on Linux(now its make), remove Makefile
 
 
 Features:
-Wheater or not what mouse buttons do will depend of specific "mode". 
+- Wheater or not what mouse buttons do will depend of specific "mode". 
 Modes examples: eraser, brick insertion, ball insertion, spike, insertion
 Modes will be changed with keyboard shortcuts.
     Add custom cursor and/or ui indicator for current mode.
-    Add erase logic
-        Add testCollision method between point and rect
-
-Create level save format.
-Start developing game inself.
+- Start developing game inself.
+    Modify project structure - src folder, core, game
