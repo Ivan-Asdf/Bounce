@@ -4,10 +4,8 @@
 #undef main // https://stackoverflow.com/questions/6847360/error-lnk2019-unresolved-external-symbol-main-referenced-in-function-tmainc
 #include <SDL2/SDL_ttf.h>
 
-#include "globals.h"
+#include "core/globals.h"
 #include "level_editor.h"
-
-#define FPS 60
 
 void capFramerate(Uint32 startTick);
 

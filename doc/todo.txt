@@ -1,0 +1,9 @@
+
+Bugfix/Refactoring/Porting:
+- Add support in CMakeLists for release build(the copying of files next built executable only happens in Debug build currently)
+- Remove recentMove if you can
+- Fix LevelEditor collision bug
+
+
+Features:
+- Add custom cursor and/or ui indicator for current mode.

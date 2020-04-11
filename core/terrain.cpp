@@ -68,6 +68,7 @@ void Terrain::saveAs(const char* path) {
     std::ofstream fout(path);
     fout << node;
 }
+
 void Terrain::load(const char* path) {
     YAML::Node node = YAML::LoadFile(path);
     mObjects = node.as<std::vector<GameObject*>>();

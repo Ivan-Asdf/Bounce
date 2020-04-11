@@ -17,3 +17,5 @@ Tile::Tile(int x, int y, unsigned size)
 
 Ball::Ball(int x, int y, unsigned size)
     : GameObject(Rect(x, y, size, size), TEXTURE_BALL) {}
+
+Ball::Ball(const Ball& ball) : GameObject(ball.mRect, ball.mTextureId) {}

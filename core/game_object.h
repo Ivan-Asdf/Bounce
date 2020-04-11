@@ -31,5 +31,8 @@ public:
 class Ball : public GameObject {
 public:
     Ball(int x, int y, unsigned size);
+
+protected:
+    Ball(const Ball& ball);
     // friend class YAML::convert<std::vector<GameObject*>>;
 };

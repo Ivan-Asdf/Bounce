@@ -15,6 +15,6 @@ public:
 private:
     int objectAt(int x, int y) const;
 
-private:
+protected:
     std::vector<GameObject*> mObjects;
 };

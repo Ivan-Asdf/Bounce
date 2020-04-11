@@ -1,6 +1,4 @@
 Balls:
-  - x: 64
-    y: 0
   - x: 256
     y: 256
 Tiles:

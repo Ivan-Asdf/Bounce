@@ -3,22 +3,9 @@
 
 #include <SDL2/SDL.h>
 
-#include "game_object.h"
-#include "terrain.h"
-
-class Camera {
-public:
-    Camera();
-    void render(SDL_Renderer* renderer, const Terrain& terrain);
-
-    void absoluteToView(int& x, int& y);
-    void viewToAbsolute(int& x, int& y);
-    void move(int x, int y);
-    void resize(unsigned w, unsigned h);
-
-private:
-    Rect mRect;
-};
+#include "core/camera.h"
+#include "core/game_object.h"
+#include "core/terrain.h"
 
 enum EditMode {
     ERASE,
