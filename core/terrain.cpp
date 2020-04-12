@@ -6,12 +6,14 @@
 
 #include "terrain.h"
 
-void Terrain::addObject(GameObject* object) {
+const GameObjects& LevelData::getGameObjects() const { return mObjects; }
+
+void LevelData::addObject(GameObject* object) {
     if (objectAt(object->getRect().x, object->getRect().y) == -1)
         mObjects.push_back(object);
 }
 
-void Terrain::removeObjectAt(int x, int y) {
+void LevelData::removeObjectAt(int x, int y) {
     int index = objectAt(x, y);
     mObjects.erase(mObjects.begin() + index);
 }
@@ -62,19 +64,19 @@ template <> struct convert<std::vector<GameObject*>> {
 };
 } // namespace YAML
 
-void Terrain::saveAs(const char* path) {
+void LevelData::saveAs(const char* path) {
     YAML::Node node;
     node = mObjects;
     std::ofstream fout(path);
     fout << node;
 }
 
-void Terrain::load(const char* path) {
+void LevelData::load(const char* path) {
     YAML::Node node = YAML::LoadFile(path);
     mObjects = node.as<std::vector<GameObject*>>();
 }
 
-int Terrain::objectAt(int x, int y) const {
+int LevelData::objectAt(int x, int y) const {
     for (int i = 0; i < mObjects.size(); ++i) {
         if (isColliding(x, y, mObjects[i]->getRect())) {
             return i;

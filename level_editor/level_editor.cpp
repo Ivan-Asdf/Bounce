@@ -8,7 +8,14 @@
 
 #include "level_editor.h"
 
-LevelEditor::LevelEditor(SDL_Renderer* renderer) : mRenderer(renderer) {}
+LevelEditor::LevelEditor(SDL_Renderer* renderer) : mRenderer(renderer) {
+    mLabelFont = TTF_OpenFont("OpenSans-Bold.ttf", 16);
+    if (!mLabelFont) {
+        printf("Failed to load font\n");
+        printf("TTF_OpenFont: %s\n", TTF_GetError());
+        exit(-1);
+    }
+}
 
 void LevelEditor::onClick(int x, int y, int button) {
     if (button == SDL_BUTTON_LEFT) {
@@ -31,9 +38,9 @@ void LevelEditor::onClick(int x, int y, int button) {
                 printf("Should not be happening\n");
                 break;
             }
-            mTerrain.addObject(object);
+            mLevelData.addObject(object);
         } else {
-            mTerrain.removeObjectAt(x, y);
+            mLevelData.removeObjectAt(x, y);
         }
     }
 }
@@ -42,7 +49,7 @@ void LevelEditor::render() {
     SDL_SetRenderDrawColor(mRenderer, 135, 206, 235, 255);
     SDL_RenderClear(mRenderer);
     SDL_SetRenderDrawColor(mRenderer, 0, 206, 0, 255);
-    mCamera.render(mRenderer, mTerrain);
+    mCamera.render(mRenderer, mLevelData);
     renderModeLabel();
     SDL_RenderPresent(mRenderer);
 }
@@ -85,21 +92,28 @@ void LevelEditor::renderModeLabel() {
         break;
     }
 
-    TTF_Font* font = TTF_OpenFont("OpenSans-Bold.ttf", 16);
-
-    if (!font) {
-        printf("Failed to laod font\n");
-        printf("TTF_OpenFont: %s\n", TTF_GetError());
+    if (!mLabelFont) {
+        printf("No font loaded to render(this should not happen)\n");
         return;
     }
 
-    SDL_Color color = {0, 0, 0};
+    SDL_Color color = {0, 0, 0, 255};
     // Text can only be put on a surface first and then converted to texture.
     SDL_Surface* labelSurface =
-        TTF_RenderText_Solid(font, labelText.c_str(), color);
+        TTF_RenderText_Solid(mLabelFont, labelText.c_str(), color);
+    if (!labelSurface) {
+        printf("Failed to create label surface\n");
+        printf("TTF_OpenFont: %s\n", TTF_GetError());
+        exit(-1);
+    }
 
     SDL_Texture* labelTexture =
         SDL_CreateTextureFromSurface(mRenderer, labelSurface);
+    if (!labelTexture) {
+        printf("Failed to create label texture\n");
+        printf("TTF_OpenFont: %s\n", TTF_GetError());
+        exit(-1);
+    }
     SDL_Rect labelRect;
     labelRect.x = 0;
     labelRect.y = 0;
@@ -114,5 +128,5 @@ void LevelEditor::renderModeLabel() {
     SDL_DestroyTexture(labelTexture);
 }
 
-void LevelEditor::loadLevelFile(const char* path) { mTerrain.load(path); }
-void LevelEditor::saveLevelFile(const char* path) { mTerrain.saveAs(path); }
+void LevelEditor::loadLevelFile(const char* path) { mLevelData.load(path); }
+void LevelEditor::saveLevelFile(const char* path) { mLevelData.saveAs(path); }

@@ -31,7 +31,8 @@ private:
 
 private:
     EditMode mode = TILE;
-    Terrain mTerrain;
+    LevelData mLevelData;
     Camera mCamera;
     SDL_Renderer* mRenderer;
+    TTF_Font* mLabelFont;
 };

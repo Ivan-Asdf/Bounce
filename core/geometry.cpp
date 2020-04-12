@@ -29,5 +29,5 @@ bool isColliding(Rect r1, Rect r2) {
 }
 
 bool isColliding(int x, int y, Rect r) {
-    return x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h;
+    return x >= r.x && x <= r.x + r.w - 1 && y >= r.y && y <= r.y + r.h - 1;
 }

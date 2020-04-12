@@ -2,7 +2,13 @@
 Bugfix/Refactoring/Porting:
 - Add support in CMakeLists for release build(the copying of files next built executable only happens in Debug build currently)
 - Remove recentMove if you can
-- Fix LevelEditor collision bug
+- Add forward declarition in headers instead of includes
+- Do mememory delete/cleanups start using smart pointers
+- Remove grid on Game
+- Add EditableLevel class
+- Make PlayerBall movement float correct
+- Rethink SDL polling (can we poll for keyboard from PlayerBall directly?)
+- Create InputManager with subscition to specific events support
 
 
 Features:

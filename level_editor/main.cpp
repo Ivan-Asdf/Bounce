@@ -20,6 +20,8 @@ int main() {
                          SDL_WINDOW_RESIZABLE);
     SDL_Renderer* renderer =
         SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!window || !renderer)
+        printf("Failed to create window or renderer\n");
 
     LevelEditor levelEditor(renderer);
     levelEditor.loadLevelFile("level.yaml");

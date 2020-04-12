@@ -26,7 +26,7 @@ int main() {
     TextureLoader::init(renderer);
 
     Game game(renderer);
-    game.loadLevelFile("level.yaml");
+    game.loadLevelFile("level_save.yaml");
 
     SDL_Event event;
     bool quit = false;
@@ -43,29 +43,13 @@ int main() {
             } else if (event.type == SDL_MOUSEBUTTONDOWN) {
 
             } else if (event.type == SDL_KEYDOWN) {
-                switch (event.key.keysym.sym) {
-                case SDLK_UP:
-                    game.movePlayerBall(0, -1);
-                    break;
-                case SDLK_DOWN:
-                    game.movePlayerBall(0, 1);
-                    break;
-                case SDLK_LEFT:
-                    game.movePlayerBall(-1, 0);
-                    break;
-                case SDLK_RIGHT:
-                    game.movePlayerBall(1, 0);
-                    break;
-                default:
-                    break;
-                }
+                game.handleKeyPress(event.key.keysym.sym);
             }
-
-            game.render();
-
-            // Limit framerate
-            capFramerate(startFrameTime);
         }
+        game.update();
+        game.render();
+        // Limit framerate
+        capFramerate(startFrameTime);
     }
     SDL_Quit();
     return 0;
