@@ -99,5 +99,4 @@ endif(WIN32)
 copy_next_to_exe(resource/OpenSans-Bold.ttf)
 copy_dir_contents_to_exe(resource/*.png)
 copy_next_to_exe(level.yaml)
-copy_next_to_exe(level_save.yaml)
 

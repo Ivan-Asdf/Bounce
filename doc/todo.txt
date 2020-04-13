@@ -1,15 +1,13 @@
 
 Bugfix/Refactoring/Porting:
 - Add support in CMakeLists for release build(the copying of files next built executable only happens in Debug build currently)
-- Remove recentMove if you can
 - Add forward declarition in headers instead of includes
-- Do mememory delete/cleanups start using smart pointers
-- Remove grid on Game
-- Add EditableLevel class
-- Make PlayerBall movement float correct
-- Rethink SDL polling (can we poll for keyboard from PlayerBall directly?)
-- Create InputManager with subscition to specific events support
-
+- Do memory delete/cleanups start using smart pointers
+- Make PlayerBall movement float correct, add Circle to PlayerBall
+- See pros/cons of iterators vs for vs for-range loops and change code accordingly
+- Add fancy logging macros/functions
+- Add more pointer/error handling
+- Add singleton folder in core put texture_loader and event_dispatcher there
 
 Features:
 - Add custom cursor and/or ui indicator for current mode.

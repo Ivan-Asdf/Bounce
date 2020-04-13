@@ -1,19 +1,17 @@
 #include "core/globals.h"
 
-#include "live_terrain.h"
+#include "live_level.h"
 
-const LevelData& LiveLevelData::getBase() const {
-    return static_cast<const LevelData&>(*this);
+const Level& LiveLevel::getBase() const {
+    return static_cast<const Level&>(*this);
 }
 
-const PlayerBall* const LiveLevelData::getPlayerBall() const {
-    return mPlayerBall;
-}
+const PlayerBall* const LiveLevel::getPlayerBall() const { return mPlayerBall; }
 
-PlayerBall* const LiveLevelData::getPlayerBall() { return mPlayerBall; }
+PlayerBall* const LiveLevel::getPlayerBall() { return mPlayerBall; }
 
-void LiveLevelData::load(const char* path) {
-    LevelData::load(path);
+void LiveLevel::load(const char* path) {
+    Level::load(path);
     for (int i = 0; i < mObjects.size(); ++i) {
         Ball* ball = dynamic_cast<Ball*>(mObjects[i]);
         if (ball) {
@@ -47,4 +45,4 @@ void LiveLevelData::load(const char* path) {
 //     mPlayerBall->mYSpeed = y;
 // }
 
-void LiveLevelData::updatePlayer() { mPlayerBall->update(); }
+void LiveLevel::updatePlayer() { mPlayerBall->update(); }

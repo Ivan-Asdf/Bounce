@@ -2,10 +2,14 @@
 #include <vector>
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
+#include "core/application.h"
 #include "core/camera.h"
 #include "core/game_object.h"
-#include "core/terrain.h"
+
+#include "editable_level.h"
+#include "level_camera.h"
 
 enum EditMode {
     ERASE,
@@ -13,15 +17,16 @@ enum EditMode {
     BALL,
 };
 
-class LevelEditor {
+class LevelEditor : public Application {
 public:
-    LevelEditor(SDL_Renderer* renderer);
+    LevelEditor();
+
+    void handleEvent(SDL_Event event);
+    void start();
 
     void onClick(int x, int y, int button);
+    void update();
     void render();
-    void moveCamera(int x, int y);
-    void resizeCamera(unsigned w, unsigned h);
-    void onKeyDown(SDL_Keycode sym);
 
     void loadLevelFile(const char* path);
     void saveLevelFile(const char* path);
@@ -31,8 +36,7 @@ private:
 
 private:
     EditMode mode = TILE;
-    LevelData mLevelData;
-    Camera mCamera;
-    SDL_Renderer* mRenderer;
+    EditableLevel mLevelData;
+    LevelCamera mCamera;
     TTF_Font* mLabelFont;
 };

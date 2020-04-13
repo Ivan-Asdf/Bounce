@@ -1,13 +1,13 @@
 #pragma once
 
-class LiveLevelData;
+class LiveLevel;
 
 class CollisionEngine {
 public:
-    CollisionEngine(LiveLevelData* liveLevelData);
+    CollisionEngine(LiveLevel* liveLevelData);
     void update();
     // void changePlayerSpeed(int x, int y);
     // bool isPlayerBallColliding();
 private:
-    LiveLevelData* const mLiveLevelData;
+    LiveLevel* const mLiveLevelData;
 };

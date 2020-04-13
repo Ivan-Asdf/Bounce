@@ -7,23 +7,9 @@
 
 Camera::Camera() : mRect(0, 0, 13 * TILE_SIZE, 8 * TILE_SIZE) {}
 
-void Camera::render(SDL_Renderer* renderer, const LevelData& terrain) {
-    // Render grid
-    // For now dont since it gets rendered in Game also not only in LevelEditor
-    // for (int iY = 0; iY < mRect.h; iY += TILE_SIZE) {
-    //     for (int iX = 0; iX < mRect.w; iX += TILE_SIZE) {
-    //         SDL_Rect sdlRect;
-    //         sdlRect.x = iX;
-    //         sdlRect.y = iY;
-    //         sdlRect.w = TILE_SIZE;
-    //         sdlRect.h = TILE_SIZE;
-    //         SDL_Rect srcrect{0, 0, 64, 64};
-    //         SDL_RenderCopy(renderer, TextureLoader::getTexture(TEXTURE_GRID),
-    //                        &srcrect, &sdlRect);
-    //     }
-    // }
+void Camera::render(SDL_Renderer* renderer, const Level& level) {
     // SDL_SetRenderDrawColor(renderer, 200, 0, 0, 255);
-    for (const GameObject* object : terrain.getGameObjects()) {
+    for (const GameObject* object : level.getGameObjects()) {
         Rect rect = object->getRect();
         if (isColliding(rect, mRect)) {
             SDL_Rect sdlRect;

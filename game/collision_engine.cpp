@@ -1,13 +1,13 @@
 #include "core/geometry.h"
 #include "core/globals.h"
 
-#include "live_terrain.h"
+#include "live_level.h"
 
 #include "collision_engine.h"
 
 #define GRAVITY 10.0
 
-CollisionEngine::CollisionEngine(LiveLevelData* liveLevelData)
+CollisionEngine::CollisionEngine(LiveLevel* liveLevelData)
     : mLiveLevelData(liveLevelData) {}
 
 void CollisionEngine::update() {

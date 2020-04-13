@@ -1,19 +1,14 @@
-#include "core/terrain.h"
+#include "core/level.h"
 
 #include "player_ball.h"
-
-struct Speed {
-    double x;
-    double y;
-};
 
 // Adds the PlayerBall member
 // Collision engine should have read/write access to PlayerBall
 // LiveCamera should have read access to PlayerBall
-class LiveLevelData : public LevelData {
+class LiveLevel : public Level {
 public:
     // Read only for LiveCamera Camera::render() method
-    const LevelData& getBase() const;
+    const Level& getBase() const;
     // Read only for LiveCamera render() method
     const PlayerBall* const getPlayerBall() const;
     // Non-read only for Collision engine

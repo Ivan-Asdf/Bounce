@@ -1,14 +1,16 @@
+#pragma once
+#include "core/event_dispatcher.h"
 #include "core/game_object.h"
 
-class LiveLevelData;
+class LiveLevel;
 
-class PlayerBall : public Ball {
+class PlayerBall : public Ball, public EventHandler {
 public:
     PlayerBall(Ball* ball);
     void update();
-    void handleKeyPress(SDL_Keycode sym);
+    void handleEvent(SDL_Event event);
 
-    friend class LiveLevelData;
+    friend class LiveLevel;
     friend class CollisionEngine;
 
 private:

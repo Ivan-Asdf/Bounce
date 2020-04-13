@@ -1,23 +1,24 @@
 
+#include "core/application.h"
 #include "core/camera.h"
 
 #include "live_camera.h"
-#include "live_terrain.h"
+#include "live_level.h"
 
 class CollisionEngine;
 
-class Game {
+class Game : public Application {
 public:
-    Game(SDL_Renderer* renderer);
+    Game();
 
-    void render();
-    void update();
-    void handleKeyPress(SDL_Keycode code);
-    void loadLevelFile(const char* path);
+    void start();
 
 private:
-    LiveLevelData mLiveLevelData;
+    void render();
+    void update();
+    void loadLevelFile(const char* path);
+
+    LiveLevel mLiveLevelData;
     LiveCamera mCamera;
     CollisionEngine* mCollEngine;
-    SDL_Renderer* mRenderer;
 };

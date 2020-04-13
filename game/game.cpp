@@ -1,13 +1,23 @@
 //#include <SDL2/SDL.h>
+#include <assert.h>
+
+#include "core/event_dispatcher.h"
+#include "core/globals.h"
 
 #include "collision_engine.h"
 
 #include "game.h"
 
-Game::Game(SDL_Renderer* renderer) : mRenderer(renderer) {}
+Game::Game() {}
+
+void Game::start() {
+    loadLevelFile("level_save.yaml");
+    Application::start();
+}
 
 // Reduce this duplication between Game and LevelEditor
 void Game::render() {
+    puts("Render called");
     SDL_SetRenderDrawColor(mRenderer, 135, 206, 235, 255);
     SDL_RenderClear(mRenderer);
     SDL_SetRenderDrawColor(mRenderer, 0, 206, 0, 255);
@@ -20,10 +30,6 @@ void Game::update() {
         mCollEngine->update();
     else
         puts("COLLION ENGINE NOT INITIALIZED");
-}
-
-void Game::handleKeyPress(SDL_Keycode code) {
-    mLiveLevelData.getPlayerBall()->handleKeyPress(code);
 }
 
 void Game::loadLevelFile(const char* path) {

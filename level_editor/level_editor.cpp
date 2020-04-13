@@ -8,13 +8,48 @@
 
 #include "level_editor.h"
 
-LevelEditor::LevelEditor(SDL_Renderer* renderer) : mRenderer(renderer) {
+LevelEditor::LevelEditor() {
+    EventDispatcher::subscribe(this, SDL_QUIT);
+    EventDispatcher::subscribe(this, SDL_MOUSEBUTTONDOWN);
+    EventDispatcher::subscribe(this, SDL_KEYDOWN);
+    TTF_Init();
     mLabelFont = TTF_OpenFont("OpenSans-Bold.ttf", 16);
     if (!mLabelFont) {
         printf("Failed to load font\n");
         printf("TTF_OpenFont: %s\n", TTF_GetError());
         exit(-1);
     }
+}
+
+void LevelEditor::handleEvent(SDL_Event event) {
+    if (event.type == SDL_QUIT) {
+        saveLevelFile("level.yaml");
+    } else if (event.type == SDL_MOUSEBUTTONDOWN) {
+        printf("Mouse down:: x: %d, y: %d\n", event.button.x, event.button.y);
+        onClick(event.button.x, event.button.y, event.button.button);
+    } else if (event.type == SDL_KEYDOWN) {
+        SDL_Keycode sym = event.key.keysym.sym;
+        switch (sym) {
+        case SDLK_e:
+            mode = ERASE;
+            break;
+
+        case SDLK_t:
+            mode = TILE;
+            break;
+
+        case SDLK_b:
+            mode = BALL;
+            break;
+        }
+    }
+
+    Application::handleEvent(event);
+}
+
+void LevelEditor::start() {
+    loadLevelFile("level.yaml");
+    Application::start();
 }
 
 void LevelEditor::onClick(int x, int y, int button) {
@@ -45,6 +80,10 @@ void LevelEditor::onClick(int x, int y, int button) {
     }
 }
 
+void LevelEditor::update() {
+    // empty
+}
+
 void LevelEditor::render() {
     SDL_SetRenderDrawColor(mRenderer, 135, 206, 235, 255);
     SDL_RenderClear(mRenderer);
@@ -52,25 +91,6 @@ void LevelEditor::render() {
     mCamera.render(mRenderer, mLevelData);
     renderModeLabel();
     SDL_RenderPresent(mRenderer);
-}
-
-void LevelEditor::moveCamera(int x, int y) { mCamera.move(x, y); }
-void LevelEditor::resizeCamera(unsigned w, unsigned h) { mCamera.resize(w, h); }
-
-void LevelEditor::onKeyDown(SDL_Keycode sym) {
-    switch (sym) {
-    case SDLK_e:
-        mode = ERASE;
-        break;
-
-    case SDLK_t:
-        mode = TILE;
-        break;
-
-    case SDLK_b:
-        mode = BALL;
-        break;
-    }
 }
 
 void LevelEditor::renderModeLabel() {
@@ -98,7 +118,8 @@ void LevelEditor::renderModeLabel() {
     }
 
     SDL_Color color = {0, 0, 0, 255};
-    // Text can only be put on a surface first and then converted to texture.
+    // Text can only be put on a surface first and then converted to
+    // texture.
     SDL_Surface* labelSurface =
         TTF_RenderText_Solid(mLabelFont, labelText.c_str(), color);
     if (!labelSurface) {
@@ -122,8 +143,8 @@ void LevelEditor::renderModeLabel() {
 
     SDL_RenderCopy(mRenderer, labelTexture, NULL, &labelRect);
 
-    // Not very efficient since we create and destroy texture every frame fix
-    // dis later.
+    // Not very efficient since we create and destroy texture every frame
+    // fix dis later.
     SDL_FreeSurface(labelSurface);
     SDL_DestroyTexture(labelTexture);
 }
