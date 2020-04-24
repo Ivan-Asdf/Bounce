@@ -9,6 +9,8 @@ Bugfix/Refactoring/Porting:
 - Add more pointer/error handling
 - Add singleton folder in core put texture_loader and event_dispatcher there
 - Make Collision engine move ball just above floor on collison
+- Remove WIN32 duplication in CMakeLists.txt
+- Remove WIN warning for yaml-cpp
 
 Features:
 - Add custom cursor and/or ui indicator for current mode.
