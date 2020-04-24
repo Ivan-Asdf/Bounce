@@ -4,8 +4,12 @@
 
 #include <SDL2/SDL.h>
 
+class EventDispatcher;
+
 class EventHandler {
-public:
+    friend class EventDispatcher;
+
+private:
     virtual void handleEvent(SDL_Event event) = 0;
 };
 
@@ -19,6 +23,7 @@ public:
 
 private:
     void subscribePrivate(const EventSubscription& handler);
+    void pollEventsPrivate();
 
     EventSubscriptions mSubscriptions;
 

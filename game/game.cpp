@@ -11,13 +11,12 @@
 Game::Game() {}
 
 void Game::start() {
-    loadLevelFile("level_save.yaml");
+    loadLevelFile("level.yaml");
     Application::start();
 }
 
 // Reduce this duplication between Game and LevelEditor
 void Game::render() {
-    puts("Render called");
     SDL_SetRenderDrawColor(mRenderer, 135, 206, 235, 255);
     SDL_RenderClear(mRenderer);
     SDL_SetRenderDrawColor(mRenderer, 0, 206, 0, 255);

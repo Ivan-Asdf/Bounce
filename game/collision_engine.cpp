@@ -2,6 +2,7 @@
 #include "core/globals.h"
 
 #include "live_level.h"
+#include "player_ball.h"
 
 #include "collision_engine.h"
 
@@ -11,36 +12,31 @@ CollisionEngine::CollisionEngine(LiveLevel* liveLevelData)
     : mLiveLevelData(liveLevelData) {}
 
 void CollisionEngine::update() {
-    puts("Emter");
     mLiveLevelData->updatePlayer();
     PlayerBall* const playerBall = mLiveLevelData->getPlayerBall();
     bool isOnFloor = false;
+    isOnFloor = isPlayerBallCollidingWithFloor(playerBall);
+
+    // printf("isOnFloor: %d, recentlyOnFloor: %d\n", isOnFloor,
+    //    playerBall->mRecentlyOnFloor);
+    if (isOnFloor && !playerBall->mRecentlyOnFloor) {
+        // puts("hit floor");
+        playerBall->mRecentlyOnFloor = true;
+        playerBall->mYSpeed = 0.0;
+    } else if (!isOnFloor) {
+        playerBall->mRecentlyOnFloor = false;
+        playerBall->mYSpeed += GRAVITY;
+    }
+}
+
+bool CollisionEngine::isPlayerBallCollidingWithFloor(PlayerBall* playerBall) {
     for (GameObject* gameObject : mLiveLevelData->getGameObjects()) {
         if (gameObject != playerBall) {
             if (isColliding(playerBall->getRect(), gameObject->getRect())) {
-                isOnFloor = true;
+                return true;
                 break;
             }
         }
     }
-
-    if (isOnFloor && !playerBall->mIsOnFloor) {
-        playerBall->mYSpeed = 0.0;
-        playerBall->mIsOnFloor = true;
-    } else if (!isOnFloor) {
-        playerBall->mIsOnFloor = false;
-        playerBall->mYSpeed += GRAVITY;
-        puts("Reducing speed");
-    }
+    return false;
 }
-
-// bool CollsionEngine::isPlayerBallColliding() {
-//     for (int i = 0; i < mObjects.size(); ++i) {
-//         if (mObjects[i] != mPlayerBall)
-//             if (isColliding(mPlayerBall->getRect(), mObjects[i]->getRect()))
-//             {
-//                 return true;
-//             }
-//     }
-//     return false;
-// }

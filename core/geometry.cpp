@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdio.h>
 
 #include "geometry.h"
@@ -31,3 +32,14 @@ bool isColliding(Rect r1, Rect r2) {
 bool isColliding(int x, int y, Rect r) {
     return x >= r.x && x <= r.x + r.w - 1 && y >= r.y && y <= r.y + r.h - 1;
 }
+
+Circle::Circle(Rect rect) {
+    assert(("Rect not a square", rect.h == rect.h));
+    r = rect.w / 2;
+    x = rect.x + r;
+    y = rect.y + r;
+}
+// Circle::Circle(double x, double y, double r) : x(x), y(y), mR(r) {}
+
+// Round this up later
+const Rect Circle::rect() const { return Rect(x - r, y - r, 2 * r, 2 * r); }

@@ -8,6 +8,8 @@ Bugfix/Refactoring/Porting:
 - Add fancy logging macros/functions
 - Add more pointer/error handling
 - Add singleton folder in core put texture_loader and event_dispatcher there
+- Make Collision engine move ball just above floor on collison
 
 Features:
 - Add custom cursor and/or ui indicator for current mode.
+- Add PlayerBall moving left/right logic.

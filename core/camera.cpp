@@ -1,5 +1,7 @@
 #include <SDL2/SDL.h>
 
+// temp
+#include "game/player_ball.h"
 #include "game_object.h"
 #include "globals.h"
 
@@ -8,7 +10,6 @@
 Camera::Camera() : mRect(0, 0, 13 * TILE_SIZE, 8 * TILE_SIZE) {}
 
 void Camera::render(SDL_Renderer* renderer, const Level& level) {
-    // SDL_SetRenderDrawColor(renderer, 200, 0, 0, 255);
     for (const GameObject* object : level.getGameObjects()) {
         Rect rect = object->getRect();
         if (isColliding(rect, mRect)) {
@@ -22,7 +23,6 @@ void Camera::render(SDL_Renderer* renderer, const Level& level) {
             //       sdlRect.y, sdlRect.w, sdlRect.h);
             SDL_Rect srcrect{0, 0, 512, 512};
             SDL_RenderCopy(renderer, object->getTexture(), &srcrect, &sdlRect);
-            // SDL_RenderFillRect(renderer, &sdlRect);
         }
     }
 }

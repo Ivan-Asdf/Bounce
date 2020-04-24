@@ -5,22 +5,35 @@
 
 #include "player_ball.h"
 
-PlayerBall::PlayerBall(Ball* ball) : Ball(*ball) {
+PlayerBall::PlayerBall(Ball* ball) : Ball(*ball), mCircle(ball->getRect()) {
     EventDispatcher::subscribe(this, SDL_KEYDOWN);
 }
 
 void PlayerBall::update() {
-    mRect.x += mXSpeed / FPS;
-    mRect.y += mYSpeed / FPS;
+    if (mXSpeed > 0) {
+        if (abs(mXSpeed) < 20 / FPS)
+            mXSpeed = 0;
+        else
+            mXSpeed -= 20 / FPS;
+    } else if (mXSpeed < 0) {
+        if (abs(mXSpeed) > -20 / FPS)
+            mXSpeed = 0;
+        else
+            mXSpeed += 20 / FPS;
+    }
+    mCircle.x += mXSpeed / FPS;
+    mCircle.y += mYSpeed / FPS;
     // printf("x: %d, y: %d\n", mRect.x, mRect.y);
 }
+
+const Rect PlayerBall::getRect() const { return mCircle.rect(); }
 
 void PlayerBall::handleEvent(SDL_Event event) {
     // Only subscribed to SDL_KEYDOWN so we assume its that
     SDL_Keycode sym = event.key.keysym.sym;
     switch (sym) {
     case SDLK_UP:
-        if (mIsOnFloor) {
+        if (mRecentlyOnFloor) {
             mYSpeed -= 200.0;
             puts("Speed set");
         }
@@ -29,13 +42,17 @@ void PlayerBall::handleEvent(SDL_Event event) {
         // game.changePlayerSpeed(0, 20);
         break;
     case SDLK_LEFT:
-        // game.changePlayerSpeed(-20, 0);
+        mXSpeed -= 70;
+        if (abs(mXSpeed) > BALL_MAX_SPEED)
+            mXSpeed = BALL_MAX_SPEED;
         break;
     case SDLK_RIGHT:
-        // game.changePlayerSpeed(20, 0);
+        mXSpeed += 70;
+        if (abs(mXSpeed) > BALL_MAX_SPEED)
+            mXSpeed = BALL_MAX_SPEED;
         break;
     default:
         break;
     }
-    printf("Ball speed %lf %d\n", mYSpeed, mIsOnFloor);
+    printf("Ball speed %lf %d\n", mYSpeed, mRecentlyOnFloor);
 }

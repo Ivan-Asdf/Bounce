@@ -1,20 +1,23 @@
 #pragma once
 #include "core/event_dispatcher.h"
 #include "core/game_object.h"
+#include "core/geometry.h"
 
 class LiveLevel;
 
-class PlayerBall : public Ball, public EventHandler {
+class PlayerBall : public Ball, private EventHandler {
 public:
     PlayerBall(Ball* ball);
     void update();
-    void handleEvent(SDL_Event event);
+    const Rect getRect() const override;
+    void handleEvent(SDL_Event event) override;
 
-    friend class LiveLevel;
     friend class CollisionEngine;
 
 private:
+    Circle mCircle;
+
     double mXSpeed = 0;
     double mYSpeed = 0;
-    bool mIsOnFloor = false;
+    bool mRecentlyOnFloor = false;
 };
