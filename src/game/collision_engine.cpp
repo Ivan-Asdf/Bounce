@@ -23,6 +23,7 @@ void CollisionEngine::update() {
         // puts("hit floor");
         playerBall->mRecentlyOnFloor = true;
         playerBall->mYSpeed = 0.0;
+
     } else if (!isOnFloor) {
         playerBall->mRecentlyOnFloor = false;
         playerBall->mYSpeed += GRAVITY;

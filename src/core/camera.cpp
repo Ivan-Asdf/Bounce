@@ -1,7 +1,5 @@
 #include <SDL2/SDL.h>
 
-// temp
-#include "game/player_ball.h"
 #include "game_object.h"
 #include "globals.h"
 

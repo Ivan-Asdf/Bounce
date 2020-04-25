@@ -1,0 +1,7 @@
+add_subdirectory(googletest)
+add_executable(GoogleTest test_core.cpp test_game.cpp)
+target_link_libraries(GoogleTest Core_lib)
+target_link_libraries(GoogleTest Game_lib)
+target_link_libraries(GoogleTest LevelEditor_lib)
+target_link_libraries(GoogleTest gtest_main)
+add_test(NAME GTests COMMAND GoogleTest)

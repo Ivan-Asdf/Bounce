@@ -5,6 +5,8 @@
 #include "live_camera.h"
 #include "live_level.h"
 
+class Application;
+
 class CollisionEngine;
 
 class Game : public Application {

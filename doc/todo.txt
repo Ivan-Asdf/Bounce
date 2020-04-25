@@ -1,5 +1,6 @@
 
 Bugfix/Refactoring/Porting:
+- Make all C headers into the C++ "C" headers. Example <stdlib.h> ---> <cstdlib>
 - Add support in CMakeLists for release build(the copying of files next built executable only happens in Debug build currently)
 - Add forward declarition in headers instead of includes
 - Do memory delete/cleanups start using smart pointers
@@ -9,7 +10,13 @@ Bugfix/Refactoring/Porting:
 - Add more pointer/error handling
 - Add singleton folder in core put texture_loader and event_dispatcher there
 - Make Collision engine move ball just above floor on collison
+- Make googletest a submodule if there is benefit to it
 
 Features:
 - Add custom cursor and/or ui indicator for current mode.
 - Add PlayerBall moving left/right logic.
+
+Learning & documentation:
+- Add documentation about how to use CMake with VsCode
+- Learn how to debug in VsCode
+- Learn in detail what is happening with tests.
