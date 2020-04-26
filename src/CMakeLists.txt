@@ -5,7 +5,6 @@ target_link_libraries(Bounce Game_lib)
 target_link_libraries(LevelEditor LevelEditor_lib)
 
 if (WIN32)
-    # Add compiler include directories
     target_include_directories(LevelEditor
                             PRIVATE "${SDL2_DIR}/include"
                             PRIVATE "${SDL2_DIR}/include/SDL2"
@@ -13,8 +12,16 @@ if (WIN32)
                             PRIVATE "${SDL2_ttf_DIR}/include"
                             PRIVATE "${cpp_DIR}/include")
 
-    # Link these libraries
     target_link_libraries(LevelEditor SDL2 SDL2main SDL2_image SDL2_ttf libyaml-cppmdd)
+
+    target_include_directories(Bounce
+                            PRIVATE "${SDL2_DIR}/include"
+                            PRIVATE "${SDL2_DIR}/include/SDL2"
+                            PRIVATE "${SDL2_image_DIR}/include"
+                            PRIVATE "${SDL2_ttf_DIR}/include"
+                            PRIVATE "${cpp_DIR}/include")
+
+    target_link_libraries(Bounce SDL2 SDL2main SDL2_image SDL2_ttf libyaml-cppmdd)
 
     # message(${CMAKE_CURRENT_BINARY_DIR})
     # message(${CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG})
